@@ -83,7 +83,7 @@ class RecommendedBookItem extends StatelessWidget {
             ListTile(
               title: Text(
                 name,
-                style: const TextStyle(fontSize: 12.0),
+                style: const TextStyle(fontSize: 12.0,fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
                 title,
@@ -91,6 +91,10 @@ class RecommendedBookItem extends StatelessWidget {
                   fontSize: 12.0,
                 ),
               ),
+              // trailing: IconButton(
+              //   onPressed: () {},
+              //   icon: Icon(Icons.bookmark),
+              // ),
             ),
           ],
         ),

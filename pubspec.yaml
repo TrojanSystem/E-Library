@@ -51,6 +51,7 @@ dependencies:
   syncfusion_flutter_pdfviewer:
   dio:
   liquid_pull_to_refresh: ^3.0.1
+  flutter_animation_progress_bar: ^2.0.1
   path:
   http:
   flutter_staggered_animations: "^1.0.0"

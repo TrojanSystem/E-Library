@@ -12,3 +12,7 @@ const kkFilteredAuthor = TextStyle(
   fontSize: 15,
   fontWeight: FontWeight.bold,
 );
+const kkuserBooked = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.bold,
+);

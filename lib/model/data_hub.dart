@@ -10,7 +10,7 @@ class DataHub extends ChangeNotifier {
   List<dynamic> _authorNamesList = [];
 
   List<dynamic> get authorNameLists => _authorNamesList;
-  int code = 0;
+
   bool isLoading = false;
 
   Future getMethod() async {
@@ -21,7 +21,8 @@ class DataHub extends ChangeNotifier {
     var res = await http
         .get(Uri.parse(theUrl), headers: {"Accept": "application/json"});
     _responseBody = json.decode(res.body);
-    code = res.statusCode;
+
+
     isLoading = false;
     notifyListeners();
   }

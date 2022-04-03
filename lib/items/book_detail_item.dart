@@ -11,13 +11,29 @@ class BookDetailItem extends StatelessWidget {
   String image;
   String description;
 
-  BookDetailItem({this.image, this.title, this.name, this.description,this.url,this.index});
+  BookDetailItem(
+      {this.image,
+      this.title,
+      this.name,
+      this.description,
+      this.url,
+      this.index});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.bookmark,
+              color: Colors.black,
+              size: 30,
+            ),
+          ),
+        ],
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
@@ -100,12 +116,11 @@ class BookDetailItem extends StatelessWidget {
                     ),
                   ),
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (_) => PdfReader(
-                            url: "http://192.168.1.11:8080/" +
-                              url,
+                            url: "http://192.168.1.11:8080/" + url,
                             name: title,
                           ),
                         ),

@@ -42,7 +42,7 @@ class _PdfReaderState extends State<PdfReader>
     print('This is the count $pageCount');
 
 //Disposes the document
-    document.dispose();
+   document.dispose();
   }
 
   @override

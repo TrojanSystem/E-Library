@@ -8,18 +8,24 @@ class TopAuthorsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final names = Provider.of<DataHub>(context).authorNameLists;
+    final names = Provider.of<DataHub>(context).pdfList;
+
+    final x = names.map((e) => e).toSet().toList();
+
+
     return SizedBox(
       height: 130,
       child: Consumer<DataHub>(
         builder: (context, topAuthour, child) => ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: topAuthour.pdfList.length,
-          itemBuilder: (context, index) => TopAuthorsItem(
-            image: topAuthour.pdfList[index]['author_image'],
-            names: topAuthour.pdfList[index]['author_name'],
-            link: topAuthour.pdfList[index]['pdf_url'],
-          ),
+          itemCount: x.length,
+          itemBuilder: (context, index) {
+                       return TopAuthorsItem(
+              image: x[index]['author_image'],
+              names: x[index]['author_name'],
+              link: x[index]['pdf_url'],
+            );
+          },
         ),
       ),
     );
