@@ -1,35 +1,54 @@
+import 'package:example/model/data_hub.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../reader_class/pdf_reader.dart';
 
-class BookDetailItem extends StatelessWidget {
+class BookDetailItem extends StatefulWidget {
   String url;
   int index;
   String name;
+  String bookmark;
   String title;
   String image;
   String description;
 
-  BookDetailItem(
-      {this.image,
-      this.title,
-      this.name,
-      this.description,
-      this.url,
-      this.index});
+  BookDetailItem({
+    this.bookmark,
+    this.image,
+    this.title,
+    this.name,
+    this.description,
+    this.url,
+    this.index,
+  });
 
   @override
+  State<BookDetailItem> createState() => _BookDetailItemState();
+}
+
+class _BookDetailItemState extends State<BookDetailItem> {
+  @override
   Widget build(BuildContext context) {
+    final clicked = Provider.of<DataHub>(context);
+
+    int booked = clicked.isClicked == false ? 0 : 1;
+    bool isClickeds = widget.bookmark == '0' ? false : true;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(
+            onPressed: () {
+              setState(() {
+                clicked.getUpdateMethod(booked.toString(), widget.title);
+                clicked.changeBookmarkStatus(isClickeds);
+              });
+            },
+            icon: Icon(
               Icons.bookmark,
-              color: Colors.black,
+              color:widget.bookmark == '0' ? Colors.black : Colors.blue[800],
               size: 30,
             ),
           ),
@@ -57,7 +76,8 @@ class BookDetailItem extends StatelessWidget {
                     width: 200,
                     height: 250,
                     child: Image(
-                        image: NetworkImage('http://192.168.1.11:8080/$image'),
+                        image: NetworkImage(
+                            'http://192.168.1.11:8080/${widget.image}'),
                         fit: BoxFit.contain),
                   ),
                 ),
@@ -83,16 +103,16 @@ class BookDetailItem extends StatelessWidget {
                     children: [
                       ListTile(
                         title: Text(
-                          title,
+                          widget.title,
                           style: kkTileColors,
                         ),
                         subtitle: Text(
-                          name,
+                          widget.name,
                           style: kkTileColors,
                         ),
                       ),
                       Text(
-                        description,
+                        widget.description,
                         style: const TextStyle(fontSize: 20, letterSpacing: 1),
                       ),
                     ],
@@ -120,8 +140,8 @@ class BookDetailItem extends StatelessWidget {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (_) => PdfReader(
-                            url: "http://192.168.1.11:8080/" + url,
-                            name: title,
+                            url: "http://192.168.1.11:8080/" + widget.url,
+                            name: widget.title,
                           ),
                         ),
                       );

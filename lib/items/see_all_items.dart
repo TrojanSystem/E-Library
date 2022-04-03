@@ -6,8 +6,9 @@ import '../reader_class/pdf_reader.dart';
 
 class SeeAllItems extends StatefulWidget {
   final List seeAllList;
+  final String title;
 
-  const SeeAllItems({this.seeAllList});
+  const SeeAllItems({this.title,this.seeAllList});
 
   @override
   _SeeAllItemsState createState() => _SeeAllItemsState();
@@ -19,7 +20,7 @@ class _SeeAllItemsState extends State<SeeAllItems> {
     double _w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Recommended For You'),
+          title:  Text(widget.title),
           centerTitle: true,
           brightness: Brightness.dark),
       body: AnimationLimiter(

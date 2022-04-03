@@ -1,12 +1,17 @@
 import 'package:example/items/user_screen_booked.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:provider/provider.dart';
+
+import '../model/data_hub.dart';
 
 class UserScreenItemDetail extends StatelessWidget {
   const UserScreenItemDetail({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<DataHub>(context).pdfList;
+    final filtered =
+        user.where((element) => element['bookmark'] == 1.toString()).toList();
     double _w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
@@ -50,23 +55,30 @@ class UserScreenItemDetail extends StatelessWidget {
             ),
           ),
           Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(25.0, 18, 25, 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Text(
-                      'Reading now',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
-                    ),
-                    Expanded(
-                      child: UserScreenBooked(w: _w),
-                    ),
-                  ],
-                ),
-              )),
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(25.0, 18, 25, 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    'Reading now',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+                  ),
+                  filtered.isEmpty
+                      ? const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 150.0),
+                            child: Text('No Bookmark Yet!'),
+                          ),
+                        )
+                      : Expanded(
+                          child: UserScreenBooked(w: _w),
+                        ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

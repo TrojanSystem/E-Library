@@ -7,7 +7,9 @@ import 'package:example/screen/trending_book_screen.dart';
 import 'package:example/screen/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:provider/provider.dart';
 
+import '../model/data_hub.dart';
 import 'slide.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -18,12 +20,20 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-  Future<void> _handleRefresh() async {
+  Future<Stream<void>> _handleRefresh() async {
+    setState(() {
+      Provider.of<DataHub>(context,listen: false).pdfList;
+    });
     return await Future.delayed(
       const Duration(seconds: 2),
     );
   }
-
+@override
+  void initState() {
+  _handleRefresh();
+  Provider.of<DataHub>(context,listen: false).pdfList;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

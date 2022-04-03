@@ -1,6 +1,8 @@
+import 'package:example/model/data_hub.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 
@@ -15,13 +17,17 @@ class UserScreenBooked extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<DataHub>(context).pdfList;
+    final filtered =
+        user.where((element) => element['bookmark'] == 1.toString()).toList();
+
     return AnimationLimiter(
       child: ListView.builder(
         padding: EdgeInsets.fromLTRB(0, _w / 30, 0, 0),
         physics: const BouncingScrollPhysics(
           parent: AlwaysScrollableScrollPhysics(),
         ),
-        itemCount: 3,
+        itemCount: filtered.length,
         itemBuilder: (BuildContext c, int i) {
           return AnimationConfiguration.staggeredList(
             position: i,
@@ -41,12 +47,14 @@ class UserScreenBooked extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Container(
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage('images/2.jpg'),
-                                fit: BoxFit.fill),
+                                image: NetworkImage(
+                                    'http://192.168.1.11:8080/${filtered[i]['cover_image']}'),
+                                fit: BoxFit.contain),
+
                             color: Colors.white,
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(20),
                               bottomLeft: Radius.circular(20),
                             ),
@@ -68,21 +76,22 @@ class UserScreenBooked extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Robert Kiyosaki'.toString(),
+                                filtered[i]['author_name'],
                                 style: kkuserBooked,
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text(
-                                'Rich Dad Poor Dad',
+                              Text(
+                                filtered[i]['name'],
                                 style: kkuserBooked,
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(4.0,8,30,8),
+                                padding:
+                                    const EdgeInsets.fromLTRB(4.0, 8, 30, 8),
                                 child: FAProgressBar(
                                   backgroundColor: Colors.black12,
                                   size: 10,
@@ -103,7 +112,6 @@ class UserScreenBooked extends StatelessWidget {
                               topRight: Radius.circular(20),
                               bottomRight: Radius.circular(20),
                             ),
-
                           ),
                         ),
                       ),
@@ -116,7 +124,6 @@ class UserScreenBooked extends StatelessWidget {
                     borderRadius: BorderRadius.all(
                       Radius.circular(20),
                     ),
-
                   ),
                 ),
               ),

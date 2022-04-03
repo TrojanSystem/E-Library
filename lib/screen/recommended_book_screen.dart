@@ -35,7 +35,7 @@ class RecommendedBookScreen extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (ctx) =>
-                                  SeeAllItems(seeAllList: data.pdfList),
+                                  SeeAllItems(seeAllList: data.pdfList,title:'Recommended for you' ),
                             ),
                           );
                         },
@@ -54,16 +54,12 @@ class RecommendedBookScreen extends StatelessWidget {
                 itemCount: data.pdfList.length,
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {
-                    final x = data.pdfList
-                        .where((element) =>
-                            element['author_name'] == 'Trevor Noah')
-                        .toList();
-                    print(x);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (ctx) => BookDetailItem(
                           index: index,
+                          bookmark: data.pdfList[index]['bookmark'],
                           title: data.pdfList[index]['name'],
                           name: data.pdfList[index]['author_name'],
                           image: data.pdfList[index]['cover_image'],

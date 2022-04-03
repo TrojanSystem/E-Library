@@ -35,7 +35,7 @@ class NewBookScreen extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (ctx) =>
-                                  SeeAllItems(seeAllList: data.pdfList),
+                                  SeeAllItems(seeAllList: data.pdfList,title: 'New Books'),
                             ),
                           );
                         },
@@ -59,6 +59,7 @@ class NewBookScreen extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (ctx) => BookDetailItem(
                           index: index,
+                          bookmark: data.pdfList[index]['bookmark'],
                           title: data.pdfList[index]['name'],
                           name: data.pdfList[index]['author_name'],
                           image: data.pdfList[index]['cover_image'],

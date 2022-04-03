@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => DataHub()..getMethod(),
+          create: (ctx) => DataHub()..getMethod()..getUpdateMethod,
         ),
         ChangeNotifierProvider(
           create: (ctx) => FileProvider()..getMethod(),
